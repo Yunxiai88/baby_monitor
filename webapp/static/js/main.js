@@ -17,7 +17,7 @@
                 showCancel:true,
                 showCaption: true,
                 allowedFileExtensions: ['mp4', 'avi', 'dat', '3gp', 'mov', 'rmvb'],
-                maxFileSize : 153600,
+                //maxFileSize : 153600,
                 maxFileCount : 1,
                 browseClass: "btn btn-primary ",
                 dropZoneEnabled: true,
@@ -40,34 +40,42 @@
                 // list out all clips
 				console.log(data.response.output)
 				
-				var file_list = list_clips(data.response.output);
+				var file_list = listClips(data.response.output);
 				
                 $("#uploadFile_processed").html(file_list);
                 $("#processresultdiv").show();
             });
 			
-			function list_clips(data) {
-				var file_list = [];
+			$(document).on('click','.play-clip',function(e){
+				e.preventDefault();
 				
-				if(data) {
-					var filename = data.filename;
-					
-					for (var key in data.values) {
-						filename = filename + "-clip"+key+".wav";
-						var btn = '<button type="button" class="btn btn-default btn-sm" click="/static/processed/"'+filename+' /><span class="glyphicon glyphicon-play"></span> Play</button>';
-						console.log(btn);
-						
-						file_list.push("<li>" + data.values[key] + btn + "</li>");
-					}
-				}
-				return file_list;
-			}
-			
-			function display_sound() {
-				
-			}
+                var filename = $(this).attr('id');
+				var url = "/static/processed/"+filename+".wav";
+
+				//play audio with out html audio tag
+				var myAudio = new Audio(url);
+				myAudio.play();
+            });
         }
     }
+	
+	function listClips(data) {
+		var file_list = [];
+		
+		if(data) {
+			var filename = data.filename;
+			
+			for (var key in data.values) {
+				var clipname = filename + "-clip"+key;
+				
+				var btn = '<button class="btn btn-default btn-sm play-clip" id="'+clipname+'"><span class="icon-play"></span> Play</button>';
+				console.log(btn);
+				
+				file_list.push("<li>" + data.values[key] + btn + "</li>");
+			}
+		}
+		return file_list;
+	};
 
     $(document).ready(page.ready);
 

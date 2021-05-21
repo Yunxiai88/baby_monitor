@@ -5,11 +5,6 @@ import configparser
 import moviepy.editor as mp
 from werkzeug.utils import secure_filename
 
-def get_conf(key, value):
-    cf=configparser.ConfigParser()
-    cf.read('webapp/util/config.ini')
-    return cf.get(key, value)
-
 def get_file_path(folder, filename):
     return os.path.join(folder, filename)
 
@@ -25,9 +20,12 @@ def save_file(file):
         return 1
     return 0
 
-def video_audio(source, destination):
+def video_audio(input, output):
+    source = get_file_path('webapp/uploads', input)
     my_clip = mp.VideoFileClip(source)
 
+    destination = get_file_path('webapp/static/processed', output)
+    print("destination = ", destination)
     my_clip.audio.write_audiofile(destination)
 
 def toRGB(image):

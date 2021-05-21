@@ -10,6 +10,10 @@ import tensorflow_hub as hub
 
 from models.util import utils
 
+import cv2
+import numpy as np
+from keras.models import load_model
+
 sample_rate = 16000
 record_seconds = 5
 
@@ -100,6 +104,58 @@ class VideoStream:
         print("processed video was successfully saved", outputfilename)
 
         return outputfilename
+
+class c3d:
+    def __init__(self, model_path = 'model_c3d.h5'):
+        self.c3d_model = load_model(model_path)
+        self.depth = 10
+        self.height = 32
+        self.width = 32
+        self.windowsize = 5
+        self.classes = ['Climb','Crawl','Roll','Walk']
+
+    def predict(self, filepath):
+        cap = cv2.VideoCapture(filepath)
+        nframe = cap.get(cv2.CAP_PROP_FRAME_COUNT)
+        fps = cap.get(cv2.CAP_PROP_FPS)
+        windowframes = (fps*self.windowsize)
+        nwindow = int(nframe/windowframes)
+        bAppend = False
+        actions = []
+        for w in range(nwindow):
+
+          action = {}
+          action['time'] = w*5
+          
+          if (nframe>=self.depth):
+              frames = [(x * windowframes / self.depth) + (w * windowframes) for x in range(self.depth)]
+          else:
+              bAppend = True
+              frames = [x + (w * windowframes) for x in range(int(nframe))] # nframe is a float
+
+          framearray = []
+
+          for i in range(len(frames)):#self.depth):
+              cap.set(cv2.CAP_PROP_POS_FRAMES, frames[i])
+              ret, frame = cap.read()
+              frame = cv2.resize(frame, (self.height, self.width))
+              framearray.append(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))
+
+          
+          if bAppend:
+              while len(framearray) < self.depth:
+                  framearray.append(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))
+          pred =  np.array(framearray)
+          pred = pred.reshape((1, 32, 32, 10, 1))
+          result = self.c3d_model.predict(pred, verbose=0)
+          if result[0][np.argmax(result, axis=1)[0]] < 0.7:
+            action['action'] = 'other'
+          else:
+            action['action'] = self.classes[np.argmax(result, axis=1)[0]]
+          actions.append(action)
+        cap.release()
+        return actions
+
 
 # release the video stream pointer
 #vs.stop()

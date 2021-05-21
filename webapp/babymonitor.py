@@ -13,8 +13,7 @@ from flask import Flask, Response, make_response, send_file
 from flask import flash, request, redirect, jsonify
 from flask import render_template
 
-from models.realStream import RealStream
-from models.facenet import FaceNet
+from models.videoStream import VideoStream
 from models.util import utils
 
 # initialize a flask object
@@ -43,7 +42,6 @@ def realStream():
     # forward to real stream page
     return render_template("realStream.html")
 
-
 @app.route("/staticstream/")
 def staticstream():
     # stop the detection thread
@@ -56,18 +54,6 @@ def staticstream():
 
     # forward to static stream page
     return render_template("staticStream.html")
-
-@app.route("/imageprocess/")
-def imageprocess():
-    # stop the detection thread
-    global t
-    try:
-        t.running = False
-        t.join()
-    except Exception:
-        print("realtime thread is not running")
-
-    return render_template("imageprocess.html")
 
 @app.route("/about/")
 def about():
@@ -94,19 +80,6 @@ def contact():
 
     # forward to contact page
     return render_template("contact.html")
-
-@app.route("/imageCapture/")
-def imageCapture():
-    # stop the detection thread
-    global t
-    try:
-        t.running = False
-        t.join()
-    except Exception:
-        print("realtime thread is not running")
-
-    # forward to register page
-    return render_template("imageCapture.html")
 
 @app.route("/videoCapture/")
 def videoCapture():
@@ -136,21 +109,17 @@ def uploadvideo():
             print("file saved successful.")
         
         # call function to convert video to audio
-        source = utils.get_file_path('webapp/uploads', file.filename)
-        print("source = ", source)
+        filename = file.filename.rsplit('.', 1)[0];
+        new_file = filename+".wav"
         
-        new_file = file.filename.rsplit('.', 1)[0]+".wav"
-        destination = utils.get_file_path('webapp/static/processed', new_file)
-        print("destination = ", destination)
-        
-        utils.video_audio(source, destination)
+        utils.video_audio(file.filename, new_file)
         
         # process file
         vs = VideoStream()
-        output = vs.processvideo(destination)
+        output = vs.processvideo(new_file)
         
-        # allow user to download after process it
-        return jsonify({'filename': ''})
+        # allow user to download and listen
+        return jsonify({'output': {'filename': filename, 'values': output}})
 
 @app.route("/video_feed")
 def video_feed():
@@ -172,70 +141,6 @@ def download(fileName):
     response = make_response(send_file(file))
     response.headers["Content-Disposition"] = "attachment; filename={};".format(file)
     return response
-
-@app.route("/content_dash", methods=['GET'])
-def content_dash():
-    data = request.values
-    if data['type'] == 'imagecode':
-        return render_template('imagecode.html')
-    if data['type'] == 'imageprocess':
-        return render_template('imageprocess.html')
-    if data['type'] == 'folderscan':
-        return render_template('folderscan.html')
-
-@app.route('/uploadImage', methods=['GET', 'POST'])
-def uploadImage():
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'uploadImage' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['uploadImage']
-
-        # save file first
-        utils.save_file(file)
-
-        # encoding and save into db
-        fn = FaceNet()
-        username = request.form['username']
-        (status, message) = fn.save_encode_db(username, file.filename)
-
-        response = make_response({"message":message})
-        response.status_code = status
-        # response.mimetype = 'text/plain'
-        # response.headers['x-tag'] = 'sth.magic'
-        return response
-
-
-@app.route('/uploadImageBase64', methods=['GET', 'POST'])
-def uploadImageBase64():
-    if request.method == 'POST':
-        username = request.form['username']
-        imagebase64 = request.form['imageBase64']
-
-        # convert base64 string to image
-        offset = imagebase64.index(',')+1
-        img_bytes = base64.b64decode(imagebase64[offset:])
-        img = Image.open(BytesIO(img_bytes))
-        img  = np.array(img)
-
-        # write to file first
-        filename = datetime.now().strftime("%Y%m%d-%H%M%S") + '.png'
-        cv2.imwrite(utils.get_file_path('webapp/uploads', filename), utils.toRGB(img))
-
-        # encoding and save into db
-        fn = FaceNet()
-        (status, message) = fn.save_encode_db(username, filename)
-
-        # processed file name
-        basename = os.path.splitext(os.path.basename(filename))[0]
-        extention = os.path.splitext(os.path.basename(filename))[1]
-        processedFile = basename+"_face"+extention
-
-        response = make_response(jsonify({"message":message, "filename": processedFile}))
-        response.status_code = status
-        return response
-
 
 # execute function
 if __name__ == '__main__':

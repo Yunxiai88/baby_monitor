@@ -21,16 +21,6 @@
                                 <input id="uploadVideo" name="uploadVideo" type="file" >
                             </div>
                         </div>
-                        <div id="processresultdiv" >
-                            <hr>
-                            <div class="form-group row">
-                                <div class="col col-md-3"><label style="font-size:12px;"><span>Detected Face</span></label></div>
-                                <div class="col col-md-3">
-                                    <img id="uploadFile_processed" width="150px"/>
-                                </div>
-                                <div class="col col-md-6 text-success">Face detected and encoded successfully, please proceed to <strong>Real Stream</strong> or <strong>Media Processing</strong> portion to test the model.</div>
-                            </div>
-                        </div>
                         <div class="text-center">
                             <button type="button" class="btn btn-lg btn-success btn-upload-3"><i class="fa fa-upload"></i> Upload</button>
                             <button type="button" class="btn btn-lg btn-secondary btn-reset-3"><i class="fa fa-ban"></i> Clear</button>
@@ -38,7 +28,15 @@
                     </form>
 
 
-                    <hr>
+                    <div id="processresultdiv" >
+						<div class="form-group row">
+							<div class="col">
+								<h3 class="text-center">Detected Sound</h3>
+							</div>
+						</div>
+						<div id="uploadFile_processed">
+						</div>
+					</div>
 
                 </div>
 

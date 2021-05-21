@@ -1,0 +1,14 @@
+create environment using Anaconda Prompt:
+
+1. deactivate base
+
+2. create environment:
+	conda create -n baby python=3.6
+
+3. activate newly created environment:
+	conda activate baby
+
+3. Go to the project root folder and run below command to install packages: 
+	pip install -r requirement.txt
+
+

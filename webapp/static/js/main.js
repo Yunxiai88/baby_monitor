@@ -37,47 +37,35 @@
 
             // call back function for upload file
             $('#uploadVideo').on('filebatchuploadsuccess', function(event, data, previewId, index) {
-                //var url = "/download/"+data.response.filename;
-                //$("#downloadbtn").attr("href", url);
+                // list out all clips
+				console.log(data.response.output)
+				
+				var file_list = list_clips(data.response.output);
+				
+                $("#uploadFile_processed").html(file_list);
                 $("#processresultdiv").show();
             });
-
-            //show detected face
-            $('body').on('DOMSubtreeModified', '.progress-bar-success', function(data){
-                if ($('.progress-bar-success').length>0 && $('.progress-bar-success')[0].outerText =="Done") {
-                    var uploadfiles = $('.file-footer-caption');
-                    var fileName = $('.file-footer-caption')[uploadfiles.length - 1].title
-
-                    var arr = fileName.split('.')
-                    arr[0]=arr[0]+"_face"
-                    var processedFileName = arr.join('.')
-                    $("#uploadFile_processed").attr("src","/static/processed/"+processedFileName)
-                    $("#processresultdiv").show();
-                }
-            });
-
-            //show proceesed image
-          $('body').on('DOMSubtreeModified', '.progress-bar-success', function(data){
-              debugger
-            if ($('.progress-bar-success').length>0 && $('.progress-bar-success')[0].outerText =="Done") {
-                var uploadfiles = $('.file-footer-caption');
-                var fileName = $('.file-footer-caption')[uploadfiles.length - 1].title
-
-                var arr = fileName.split('.')
-                arr[0]=arr[0]+"_processed"
-                var processedFileName = arr.join('.')
-                if (['JPG', 'PNG'].indexOf(arr[1].toUpperCase())>=0){
-                    $("#uploadImg_processed").attr("src","/static/processed/"+processedFileName)
-                    $("#processed_img_wrapper").attr("style","")
-                }
-                else {
-                    $("#processed_img_wrapper").attr("style","display:none;")
-                }
-
-                $("#processresultdiv").show();
-            }
-          });
-
+			
+			function list_clips(data) {
+				var file_list = [];
+				
+				if(data) {
+					var filename = data.filename;
+					
+					for (var key in data.values) {
+						filename = filename + "-clip"+key+".wav";
+						var btn = '<button type="button" class="btn btn-default btn-sm" click="/static/processed/"'+filename+' /><span class="glyphicon glyphicon-play"></span> Play</button>';
+						console.log(btn);
+						
+						file_list.push("<li>" + data.values[key] + btn + "</li>");
+					}
+				}
+				return file_list;
+			}
+			
+			function display_sound() {
+				
+			}
         }
     }
 

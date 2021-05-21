@@ -13,9 +13,8 @@ from flask import Flask, Response, make_response, send_file
 from flask import flash, request, redirect, jsonify
 from flask import render_template
 
-from models.realStream import RealStream
-from models.facenet import FaceNet
 from models.util import utils
+from models.videoStream import VideoStream
 
 # initialize a flask object
 app = Flask(__name__)

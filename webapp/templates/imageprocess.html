@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="d-flex" id="wrapper">
+    <!-- Sidebar -->
+    <div class="sidenav">
+        <li >
+            <a href="#navbarDropdown" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" >
+                Face Encoding
+            </a>
+            <ul class="collapse list-unstyled" id="navbarDropdown">
+                <li >
+                    <a href="/staticstream">Static Image Encoding</a>
+                </li>
+                <li>
+                    <a href="/imageCapture"> Capture Image Encoding</a>
+                </li>
+            </ul>
+
+        </li>
+
+        <li >
+            <a href="#navbarDropdown2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" >
+                Media Processing
+            </a>
+            <ul class="collapse list-unstyled" id="navbarDropdown2">
+                <li>
+                    <a href="/imageprocess">Static Media Processing</a>
+                </li>
+                <li>
+                    <a href="/videoCapture"> Capture Video Processing</a>
+                </li>
+            </ul>
+
+        </li>
+
+    </div>
+
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div class="container-fluid static-box">
+        <div id="page-content-wrapper">
+            <h1 class="titleFont">Static Media Processing</h1>
+            <div id="static_content">
+                <div class="container-fluid" id="main">
+                    <h2 class="text-center">Please upload an image or video to start detection</h2>
+                    <form action="/uploadfile" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <div class="custom-file">
+                                <input id="uploadFile" name="uploadFile" type="file" >
+                            </div>
+                        </div>
+                        <div id="processresultdiv" >
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-sm-3"><span>Processed Result</span></label>
+                                <div class="col col-md-3" id ="processed_img_wrapper" style="display: none;">
+                                    <img id="uploadImg_processed" width="150px"/>
+                                </div>
+                                <div class="col col-md-6 text-success">Media processed successfully</div>
+                                <div class="col-sm-9">
+                                    <a id="downloadbtn" href="#" class="btn btn-primary" role ="button">Download</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-lg btn-success btn-uploadfile-3"><i class="fa fa-upload"></i> Upload</button>
+                            <button type="button" class="btn btn-lg btn-secondary btn-resetfile-3"><i class="fa fa-ban"></i> Clear</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- /#page-content-wrapper -->
+</div>
+
+{% endblock %}

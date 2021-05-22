@@ -110,11 +110,11 @@ def uploadvideo():
         print("periods = ", periods)
 
         # category
-        groups = [{'1':'Climb', '2':'Crawl', '3':'Roll', '4':'Walk'}]
+        groups = [{'1':'Climb', '2':'Crawl', '3':'Roll', '4':'Walk', '5':'Others'}]
         for dic in groups:
             for id, name in dic.items():
-                period = utils.get_period(id, name, periods)
-                video.append({'id':id, 'name':name, 'period':period})
+                periods = utils.get_period(id, name, periods)
+                video.append({'id':id, 'name':name, 'periods':periods})
         
         # allow user to download and listen
         return jsonify({'output': {'filename': filename, 'audio': audio, 'video': video}})

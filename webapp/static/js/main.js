@@ -46,7 +46,9 @@
                 $("#processresultdiv").show();
 
                 // display chart
-                displayChart(data)
+                displayGanttChart(data.response.output)
+                displayBarChartAction(data.response.output)
+                displayBarChartAudio(data.response.output)
 
             });
         }
@@ -85,8 +87,7 @@
         return str;
     };
 
-    function displayChart(data) {
-      
+    function displayGanttChart(data) {
         // var data =
         // {
         // 'audio': {
@@ -99,28 +100,28 @@
         //       id: "1",
         //       name: "Climb",
         //       periods: [
-        //         {id:"1_1", start: "2018-01-02T00:00:00.000Z", end: "2018-01-02T00:00:05.000Z"},
-        //         {id:"1_2", start: "2018-01-02T00:00:15.000Z", end: "2018-01-02T00:00:20.000Z"},
-        //         {id:"1_3", start: "2018-01-02T00:00:20.000Z", end: "2018-01-02T00:00:25.000Z"}
+        //         {id:"1_1", start: "00", end: "05"},
+        //         {id:"1_2", start: "15", end: "20"},
+        //         {id:"1_3", start: "20", end: "25"}
         //     ]},
         //     {
         //       id: "2",
         //       name: "Crawl",
         //       periods: [
-        //         {id: "2_1", start: "2018-01-02T00:00:05.000Z", end: "2018-01-02T00:00:10.000Z"},
-        //         {id: "2_2", start: "2018-01-02T00:00:25.000Z", end: "2018-01-02T00:00:30.000Z"}
+        //         {id: "2_1", start: "05", end: "10"},
+        //         {id: "2_2", start: "25", end: "30"}
         //     ]},
         //     {
         //       id: "3",
         //       name: "Roll",
         //       periods: [
-        //         {id: "3_1", start: "2018-01-02T00:00:10.000Z", end: "2018-01-02T00:00:15.000Z"}
+        //         {id: "3_1", start: "10", end: "15"}
         //     ]},
         //     {
         //        id: "4",
         //        name: "Walk",
         //        periods: [
-        //          {id: "3_1", start: "2018-01-02T00:00:30.000Z", end: "2018-01-02T00:00:35.000Z"}
+        //          {id: "3_1", start: "30", end: "35"}
         //     ]}
         //   ]
         // }
@@ -182,49 +183,7 @@
         // text__nocry_1.fontWeight(600);
         // text__nocry_1.offsetX(-10);    
         
-
-
-        var data2 = {
-            'audio': {
-                '0-5': "crying_baby",
-                '5-10': "crying_baby",
-                '10-15': "other",
-                '15-20': "other",
-                '20-25': "other",
-                '25-30': "crying_baby",
-                '30-35': "crying_baby"
-            },
-            'video':[
-                {
-                  id: "1",
-                  name: "Climb",
-                  periods: [
-                    {id:"1_1", start: "0", end: "5"},
-                    {id:"1_2", start: "15", end: "20"},
-                    {id:"1_3", start: "20", end: "25"}
-                ]},
-                {
-                  id: "2",
-                  name: "Crawl",
-                  periods: [
-                    {id: "2_1", start: "05", end: "10"},
-                    {id: "2_2", start: "25", end: "30"}
-                ]},
-                {
-                  id: "3",
-                  name: "Roll",
-                  periods: [
-                    {id: "3_1", start: "10", end: "15"}
-                ]},
-                {
-                   id: "4",
-                   name: "Walk",
-                   periods: [
-                     {id: "3_1", start: "30", end: "35"}
-                ]}
-              ]
-        }
-        var chartData = data2.video.map(label=>{
+        var chartData = data.video.map(label=>{
             var newLabel = {...label}
             var newPeriods = label.periods.map(session=>{
                 var newSession = {...session}
@@ -243,10 +202,10 @@
         var textCounter = 0
 
         //create markers, for audio
-        for (var session in data2.audio){
+        for (var session in data.audio){
             var sessionStart = session.split('-')[0]
             var sessionEnd = session.split('-')[1]
-            if (data2.audio[session]=='crying_baby') {
+            if (data.audio[session]=='crying_baby') {
                 var cryMarker = chart.getTimeline().rangeMarker(markerCounter)
                 cryMarker.from(formatTime(sessionStart));
                 cryMarker.to(formatTime(sessionEnd));
@@ -278,9 +237,46 @@
         }
 
 
-        chart.container("chart_display");
+        chart.container("ganttChart_display");
         chart.draw();
         chart.fitAll();
+    }
+
+    function displayBarChartAction(data){        
+        var actions = data.video;
+        var chartData = actions.map(x=>{
+            var item = [];
+            item.push(x.name)
+            item.push(x.periods.length)
+            return item
+        })
+        console.log(chartData);
+          chart = anychart.column();
+          var series = chart.column(chartData);
+          chart.container("columnChart_display_action");
+          chart.draw();
+
+    }
+
+    function displayBarChartAudio(data){
+        
+          var audio = data.audio
+          var cryCount = 0
+          var noCryCount = 0
+          for (var session in audio){
+            if (audio[session]=='crying_baby') cryCount = cryCount +1
+            else noCryCount = noCryCount +1
+          }
+          var chartData = [
+              ["Crying", cryCount],
+              ["Not crying", noCryCount]
+          ]
+
+            
+          chart = anychart.column();
+          var series = chart.column(chartData);
+          chart.container("columnChart_display_audio");
+          chart.draw();
     }
 
     function formatTime(s){

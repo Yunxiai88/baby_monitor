@@ -121,27 +121,6 @@ def uploadvideo():
         # allow user to download and listen
         return jsonify({'output': {'filename': filename, 'values': output}})
 
-@app.route("/video_feed")
-def video_feed():
-    # return the response generated along with the media type (mime type)
-    global t
-
-    # start a thread that will perform mask detection
-    rs = RealStream()
-    t = threading.Thread(target=rs.mask_detection)
-    t.daemon = True
-    t.start()
-    return Response(rs.generate(), mimetype = "multipart/x-mixed-replace; boundary=frame")
-
-
-@app.route("/download/<fileName>", methods=['GET'])
-def download(fileName):
-    file = utils.get_file_path('static/processed', fileName)
-
-    response = make_response(send_file(file))
-    response.headers["Content-Disposition"] = "attachment; filename={};".format(file)
-    return response
-
 # execute function
 if __name__ == '__main__':
     # construct the argument parser and parse command line arguments

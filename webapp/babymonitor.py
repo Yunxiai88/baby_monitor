@@ -118,6 +118,8 @@ def uploadvideo():
         vs = VideoStream()
         output = vs.processvideo(new_file)
         
+        c3d = c3d()
+        actions = c3d.predict(filename)
         # allow user to download and listen
         return jsonify({'output': {'filename': filename, 'values': output}})
 

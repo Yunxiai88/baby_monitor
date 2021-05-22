@@ -31,28 +31,14 @@
       * Combine YAMNet with new model into one single model.
       * refer to ```YAMNet_Detection.ipynb``` for more details on traning YAMNet.
 
-2. **Training FaceNet**
-     * If you want to directly use a pre-trained model for facial recognition, just skip this step.
-     * If you want to implement a tranfer learning with a pre-trained model and your own dataset, you need to first download this pre-trained [model](https://drive.google.com/file/d/0B5MzpY9kBtDVZ2RpVDYwWmxoSUk/edit), put it in /models and unzip it. Make sure that the directory /models/20170512-110547 has 4 files.
+2. **Training 3D CNN**
+      * Download A2D(Actor-Action Dataset) dataset from https://web.eecs.umich.edu/~jjcorso/r/a2d/.
+      * Extract only the Baby action dataset.
+      * refer to ```video_preprocessing.py``` for more details on baby video dataset preparation.
+      * From the extracteded video dataset, filter out video if have other human in the video.
+      * Split the Dataset into 80/20 for training and testing.
+      * refer to ```video_classification_on_baby_action.ipynb``` for more details on 3D CNN model summary and training parameters.
        
-       Then run
-       ```bash
-       $ python train_tripletloss.py
-       ```
-     
-       The trained model will be in the /models/facenet.
-     
-     * If you want to train your own model from scratch. In ```train_tripletloss.py``` line 433, there is an optional argument named "--pretrained_model", delete its default value.
-     
-       Then run again 
-       ```bash
-       $ python train_tripletloss.py
-       ```
-     
-       The trained model will also be in the /models/facenet.
-       
-     * refer to ```facenet_test.ipynb``` for more details on traning facenet.
-
 
 ## System Integration
 1. **WebUI**

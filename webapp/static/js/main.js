@@ -58,10 +58,10 @@
         if(data) {
             var filename = data.filename;
 
-            for (var key in data.values) {
+            for (var key in data.audio) {
                 var clipname = filename + "-clip"+key;
-                var audio = audioElement(clipname);
-                var str = tableElement(data.values[key], audio);
+                var sound = audioElement(clipname);
+                var str = tableElement(data.audio[key], sound);
                 
                 console.log(str)
                 file_list.push(str);
@@ -77,10 +77,10 @@
         return str;
     };
     
-    function tableElement(label, audio, play, stop) {
+    function tableElement(label, sound, play, stop) {
         var str = '<div class="form-group row">';
         str = str + '<div class="col-sm-2">'+label+'</div>';
-        str = str + '<div class="col-sm-6">'+audio+'</div>';
+        str = str + '<div class="col-sm-6">'+sound+'</div>';
         str = str + '</div>';
         return str;
     };

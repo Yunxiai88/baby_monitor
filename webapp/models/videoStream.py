@@ -45,7 +45,7 @@ class VideoStream:
 
     def save_clip(self, data, index, filename):
         filename = filename.rsplit('.', 1)[0];
-        filename = '{:s}-clip{:d}.wav'.format(filename, index)
+        filename = '{:s}-clip{:s}.wav'.format(filename, index)
         filename = utils.get_file_path('webapp/static/processed', filename)
 
         sf.write(filename, data, sample_rate, subtype='PCM_24')
@@ -60,7 +60,7 @@ class VideoStream:
         print(f'Total duration: {duration:.2f}s')
 
         index = 0
-        outputfilename = {}
+        sounds = {}
         
         for i in range(0, int(duration), 5):
             start = i*sample_rate
@@ -76,13 +76,11 @@ class VideoStream:
             print(f'The main sound is: {baby_sound}')
 
             # save clip file
-            self.save_clip(wav_data, i, filename)
+            key = "{:d}-{:d}".format(i, i+5)
+            self.save_clip(wav_data, key, filename)
+            sounds[key] = baby_sound
 
-            outputfilename[i] = baby_sound
-
-        print("processed video was successfully saved", outputfilename)
-
-        return outputfilename
+        return sounds
 
 
 class c3d:

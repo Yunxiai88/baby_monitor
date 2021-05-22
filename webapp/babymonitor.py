@@ -15,6 +15,7 @@ from flask import render_template
 
 from models.util import utils
 from models.videoStream import VideoStream
+from models.videoStream import c3d
 
 # initialize a flask object
 app = Flask(__name__)
@@ -117,11 +118,14 @@ def uploadvideo():
         # process file
         vs = VideoStream()
         output = vs.processvideo(new_file)
-        
-        # c3d = c3d()
-        # actions = c3d.predict(filename)
 
-        
+        print(file.filename)
+        c3d_model = c3d()
+        actions = c3d_model.predict('webapp/uploads/'+file.filename)
+        print(actions)
+
+
+
         # allow user to download and listen
         return jsonify({'output': {'filename': filename, 'values': output}})
 

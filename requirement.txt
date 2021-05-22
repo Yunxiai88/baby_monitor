@@ -2,14 +2,15 @@ flask==1.1.2
 imutils==0.5.3
 tensorflow==2.4.1
 tensorflow_hub==0.12.0
+tensorflow.io
 pillow==7.2.0
 Keras==2.4.3
 moviepy==1.0.3
 pyaudio==0.2.11
+Werkzeug==0.16.1
 tensorflow-io==0.17.1
 pydub
 pandas==1.1.5
 numpy==1.19.5
 librosa==0.8.0
-
 soundfile

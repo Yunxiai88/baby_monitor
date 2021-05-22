@@ -6,23 +6,19 @@
     <!-- Page Content -->
     <div class="container-fluid static-box">
         <div id="page-content-wrapper">
-			<div class="row">
-				<div class="offset-md-3">
-					<h1 class="titleFont">Static Video Processing</h1>
-				</div>
-			</div>
+
 			
             <div id="static_content">
                 <div class="container-fluid" id="main">
-                    <h2 class="text-center">Please upload a baby video</h2>
+                    <h2 class="text-center">Please upload a video with baby in the crib</h2>
                     <form action="/uploadvideo" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <div class="custom-file">
                                 <input id="uploadVideo" name="uploadVideo" type="file" >
                             </div>
                         </div>
-                        <div class="text-center">
-                            <button type="button" class="btn btn-lg btn-success btn-upload-3"><i class="fa fa-upload"></i> Upload</button>
+                        <div class="text-center" style="padding-bottom: 1em;">
+                            <button type="button" class="btn btn-lg btn-success btn-upload-3"><i class="fa fa-upload"></i> Process</button>
                             <button type="button" class="btn btn-lg btn-secondary btn-reset-3"><i class="fa fa-ban"></i> Clear</button>
                         </div>
                     </form>
@@ -34,6 +30,10 @@
 								<h3 class="text-center">Detected Sound</h3>
 							</div>
 						</div>
+                        <div>
+                            <div style="height: 15px;width: 15px;background-color: #a4cbad; display: inline-block;"></div> <div style="display: inline;">Not Crying</div>
+                            <div style="height: 15px;width: 15px;background-color: #f4c0b4; display: inline-block;"></div> <div style="display: inline;">Crying</div>
+                        </div>
                         <div id="chart_display" style="width: 80em; height: 10em; margin:5px;">
 						</div>
                         <div id="uploadFile_processed">

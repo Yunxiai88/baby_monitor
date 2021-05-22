@@ -101,7 +101,7 @@ class c3d:
         bAppend = False
         actions = []
         for w in range(nwindow):
-
+          print('processing {0} window'.format(w))
           action = {}
           action['time'] = w*5
           
@@ -130,6 +130,7 @@ class c3d:
             action['action'] = 'other'
           else:
             action['action'] = self.classes[np.argmax(result, axis=1)[0]]
+          print('action classified as {0}'.format(action))
           actions.append(action)
         cap.release()
         return actions

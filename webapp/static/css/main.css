@@ -101,7 +101,7 @@ footer {
 }
 
 .static-box{
-    width: 50em;
+    width: 85em;
     margin-top: 3em;
 }
 
@@ -178,10 +178,6 @@ footer {
     background-color: white !important;
 }
 
-.static-box{
-    width: 50em;
-    margin-top: 3em;
-}
 
 #sidebar
 .sidenav {

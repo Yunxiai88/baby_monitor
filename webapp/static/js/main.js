@@ -224,7 +224,6 @@
                 ]}
               ]
         }
-        debugger;
         var chartData = data2.video.map(label=>{
             var newLabel = {...label}
             var newPeriods = label.periods.map(session=>{

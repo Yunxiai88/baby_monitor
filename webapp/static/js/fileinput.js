@@ -1394,7 +1394,7 @@
                         rm.checkAborted(intervalId);
                         if (flag === 'new') {
                             self.lock();
-                            flag = 'processing';
+                            flag = 'Analyzing';
                             id = ids.shift();
                             fm.initStats(id);
                             if (fm.stack[id]) {

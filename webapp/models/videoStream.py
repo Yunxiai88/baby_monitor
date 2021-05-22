@@ -4,6 +4,8 @@ import datetime
 import imutils
 import wave
 import pyaudio
+import numpy as np
+import soundfile as sf
 import tensorflow as tf
 import tensorflow_io as tfio
 import tensorflow_hub as hub
@@ -14,26 +16,10 @@ import cv2
 import numpy as np
 from keras.models import load_model
 
+rate = 44100
+
 sample_rate = 16000
 record_seconds = 5
-
-# set the chunk size of 1024 samples
-chunk = 1024
-
-# sample format
-FORMAT = pyaudio.paInt16
-
-# mono, change to 2 if you want stereo
-channels = 1
-
-# initialize PyAudio object
-p = pyaudio.PyAudio()
-
-stream = p.open(format=FORMAT,
-                channels=channels,
-                rate=sample_rate,
-                output=True,
-                frames_per_buffer=chunk)
 
 class VideoStream:
     def __init__(self):
@@ -57,21 +43,12 @@ class VideoStream:
         wav = tfio.audio.resample(wav, rate_in=sample_rate, rate_out=16000)
         return wav
 
-    def save_cyring_clip(data, filename):
-        p.terminate()
-        # save audio file
-        # open the file in 'write bytes' mode
-        wf = wave.open(filename, "wb")
-        # set the channels
-        wf.setnchannels(channels)
-        # set the sample format
-        wf.setsampwidth(p.get_sample_size(FORMAT))
-        # set the sample rate
-        wf.setframerate(sample_rate)
-        # write the frames as bytes
-        wf.writeframes(data)
-        # close the file
-        wf.close()
+    def save_clip(self, data, index, filename):
+        filename = filename.rsplit('.', 1)[0];
+        filename = '{:s}-clip{:d}.wav'.format(filename, index)
+        filename = utils.get_file_path('webapp/static/processed', filename)
+
+        sf.write(filename, data, sample_rate, subtype='PCM_24')
     
     # process audio
     def processvideo(self, filename):
@@ -98,12 +75,15 @@ class VideoStream:
             baby_sound = self.LABELS[tf.argmax(reloaded_results)]
             print(f'The main sound is: {baby_sound}')
             
-            #self.save_cyring_clip(wav_data, 'clip-'+i)
+            # save clip file
+            self.save_clip(wav_data, i, filename)
+            
             outputfilename[i] = baby_sound
 
         print("processed video was successfully saved", outputfilename)
 
         return outputfilename
+
 
 class c3d:
     def __init__(self, model_path = 'model_c3d.h5'):
@@ -157,5 +137,4 @@ class c3d:
         return actions
 
 
-# release the video stream pointer
-#vs.stop()
+

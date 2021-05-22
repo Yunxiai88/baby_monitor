@@ -118,10 +118,14 @@ def uploadvideo():
         # process file
         vs = VideoStream()
         output = vs.processvideo(new_file)
+
         print(file.filename)
         c3d_model = c3d()
         actions = c3d_model.predict('webapp/uploads/'+file.filename)
         print(actions)
+
+
+
         # allow user to download and listen
         return jsonify({'output': {'filename': filename, 'values': output}})
 

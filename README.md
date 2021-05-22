@@ -29,7 +29,7 @@
       * Filter the data which you will apply some transformation on it. then split the dataset into train, validation and test.
       * Create a simple Sequential Model with -- one hiden layer and 2 outputs to recognize baby crying and others.
       * Combine YAMNet with new model into one single model.
-      * refer to ```YAMNet_Detection.ipynb``` for more details on traning YOLOv4.
+      * refer to ```YAMNet_Detection.ipynb``` for more details on traning YAMNet.
 
 2. **Training FaceNet**
      * If you want to directly use a pre-trained model for facial recognition, just skip this step.

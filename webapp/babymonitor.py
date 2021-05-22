@@ -89,22 +89,35 @@ def uploadvideo():
         # call function to convert video to audio
         filename = file.filename.rsplit('.', 1)[0]
         new_file = filename+".wav"
+        print(file.filename)
         
         utils.video_audio(file.filename, new_file)
         
-        # process file
+        # process for audio sound detect
         vs = VideoStream()
-        output = vs.processvideo(new_file)
+        audio = vs.processvideo(new_file)
+        print("audio = ", audio)
 
-        print(file.filename)
+        # process for video action detect
         c3d_model = c3d()
         actions = c3d_model.predict('webapp/uploads/'+file.filename)
-        print(actions)
+        print("video = ", actions)
+        
+        video = []
+        
+        # group action together
+        periods = utils.group_action(actions)
+        print("periods = ", periods)
 
-
-
+        # category
+        groups = [{'1':'Climb', '2':'Crawl', '3':'Roll', '4':'Walk'}]
+        for dic in groups:
+            for id, name in dic.items():
+                period = utils.get_period(id, name, periods)
+                video.append({'id':id, 'name':name, 'period':period})
+        
         # allow user to download and listen
-        return jsonify({'output': {'filename': filename, 'values': output}})
+        return jsonify({'output': {'filename': filename, 'audio': audio, 'video': video}})
 
 # execute function
 if __name__ == '__main__':

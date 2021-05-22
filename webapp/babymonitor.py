@@ -106,18 +106,22 @@ def uploadvideo():
         video = []
         
         # group action together
-        periods = utils.group_action(actions)
-        print("periods = ", periods)
+        groups = utils.group_action(actions)
+        print("groups = ", groups)
 
         # category
-        groups = [{'1':'Climb', '2':'Crawl', '3':'Roll', '4':'Walk', '5': 'Others'}]
-        for dic in groups:
+        bases = [{'1':'Climb', '2':'Crawl', '3':'Roll', '4':'Walk', '5': 'Others'}]
+        for dic in bases:
             for id, name in dic.items():
-                periods = utils.get_period(id, name, periods)
+                if name in groups:
+                    periods = utils.get_period(id, name, groups)
+                else:
+                    periods = {}
                 video.append({'id':id, 'name':name, 'periods':periods})
         
         # allow user to download and listen
-        return jsonify({'output': {'filename': filename, 'audio': audio, 'video': video}})
+        output = {'output': {'filename': filename, 'audio': audio, 'video': video}}
+        return jsonify({'output': output})
 
 # execute function
 if __name__ == '__main__':

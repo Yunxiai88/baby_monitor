@@ -31,17 +31,6 @@ def index():
         print("realtime thread is not running")
     return render_template("index.html")
 
-@app.route("/realstream/")
-def realStream():
-    # start a thread that will start a video stream
-    global t
-    try:
-        t.running = False
-        t.join()
-    except Exception:
-        print("realtime thread is not running")
-    # forward to real stream page
-    return render_template("realStream.html")
 
 @app.route("/staticstream/")
 def staticstream():
@@ -82,18 +71,6 @@ def contact():
     # forward to contact page
     return render_template("contact.html")
 
-@app.route("/videoCapture/")
-def videoCapture():
-    # stop the detection thread
-    global t
-    try:
-        t.running = False
-        t.join()
-    except Exception:
-        print("realtime thread is not running")
-
-    # forward to register page
-    return render_template("videoCapture.html")
 
 #---------------------------------------------------------------------
 #----------------------------Functions--------------------------------

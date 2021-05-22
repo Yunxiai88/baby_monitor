@@ -110,7 +110,7 @@ def uploadvideo():
         print("periods = ", periods)
 
         # category
-        groups = [{'1':'Climb', '2':'Crawl', '3':'Roll', '4':'Walk'}]
+        groups = [{'1':'Climb', '2':'Crawl', '3':'Roll', '4':'Walk', '5': 'Others'}]
         for dic in groups:
             for id, name in dic.items():
                 period = utils.get_period(id, name, periods)

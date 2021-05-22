@@ -127,7 +127,7 @@ class c3d:
           pred = pred.reshape((1, 32, 32, 10, 1))
           result = self.c3d_model.predict(pred, verbose=0)
           if result[0][np.argmax(result, axis=1)[0]] < 0.7:
-            action['action'] = 'other'
+            action['action'] = 'Others'
           else:
             action['action'] = self.classes[np.argmax(result, axis=1)[0]]
           print('action classified as {0}'.format(action))

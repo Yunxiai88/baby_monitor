@@ -18,20 +18,18 @@
 * Flask
 * OpenCV
 * YOLOv4
-* FaceNet
+* YAMNet
 * InceptionResNetV2
 
 ## Training Details
 
-1. **Training YOLOv4**
-      * run command to Clone project from YOLOv4.
-      ```
-      $ git clone https://github.com/AlexeyAB/darknet.git
-      ```
-      * change configuration
-      * Prepare the trainning data and put them in
-      * run this command to train data
-      * refer to ```yolov4_training.ipynb``` for more details on traning YOLOv4.
+1. **Training YAMNet**
+      * Loading YAMNet from TensorFlow Hub or download YAMNet to your local.
+      * Download ESC-50 dataset from https://github.com/karolpiczak/ESC-50.
+      * Filter the data which you will apply some transformation on it. then split the dataset into train, validation and test.
+      * Create a simple Sequential Model with -- one hiden layer and 2 outputs to recognize baby crying and others.
+      * Combine YAMNet with new model into one single model.
+      * refer to ```YAMNet_Detection.ipynb``` for more details on traning YOLOv4.
 
 2. **Training FaceNet**
      * If you want to directly use a pre-trained model for facial recognition, just skip this step.
@@ -67,7 +65,7 @@ and put it under /yolov4/yolov4_custom_train_final.weights
 
 * run this command at the project root directory:  
        ```
-       $ python webApp/maskdetection.py --ip 127.0.0.1 --port 8000
+       $ python webapp/babymonitor.py --ip 127.0.0.1 --port 8000
        ```
 * open URL in your browser:
        ```
@@ -75,8 +73,8 @@ and put it under /yolov4/yolov4_custom_train_final.weights
        ```
 ## References
 
-* https://github.com/X-zhangyang/Real-World-Masked-Face-Dataset
-* https://www.mygreatlearning.com/blog/real-time-face-detection/
-* https://colab.research.google.com/drive/1BcHkqaNdIvVAwwcBJZGyzdDLyR6Ygz5w?usp=sharing
-
+* https://www.soundjay.com/baby-crying-sound-effect.html
+* https://research.google.com/audioset/ontology/index.html
+* https://gist.github.com/achillessin
+* https://towardsdatascience.com/deep-learning-for-classifying-audio-of-babies-crying-9a29e057f7ca
 

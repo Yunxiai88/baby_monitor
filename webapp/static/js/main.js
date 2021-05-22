@@ -38,44 +38,48 @@
             // call back function for upload file
             $('#uploadVideo').on('filebatchuploadsuccess', function(event, data, previewId, index) {
                 // list out all clips
-				console.log(data.response.output)
-				
-				var file_list = listClips(data.response.output);
-				
+                console.log(data.response.output)
+
+                var file_list = listClips(data.response.output);
+
                 $("#uploadFile_processed").html(file_list);
                 $("#processresultdiv").show();
             });
-			
-			$(document).on('click','.play-clip',function(e){
-				e.preventDefault();
-				
-                var filename = $(this).attr('id');
-				var url = "/static/processed/"+filename+".wav";
-
-				//play audio with out html audio tag
-				var myAudio = new Audio(url);
-				myAudio.play();
-            });
         }
     }
-	
-	function listClips(data) {
-		var file_list = [];
-		
-		if(data) {
-			var filename = data.filename;
-			
-			for (var key in data.values) {
-				var clipname = filename + "-clip"+key;
-				
-				var btn = '<button class="btn btn-default btn-sm play-clip" id="'+clipname+'"><span class="icon-play"></span> Play</button>';
-				console.log(btn);
-				
-				file_list.push("<li>" + data.values[key] + btn + "</li>");
-			}
-		}
-		return file_list;
-	};
+
+    function listClips(data) {
+        var file_list = [];
+
+        if(data) {
+            var filename = data.filename;
+
+            for (var key in data.values) {
+                var clipname = filename + "-clip"+key;
+                var audio = audioElement(clipname);
+                var str = tableElement(data.values[key], audio);
+                
+                console.log(str)
+                file_list.push(str);
+            }
+        }
+        return file_list;
+    };
+    
+    function audioElement(filename) {
+        var str = '<audio id="'+filename+'" controls>';
+        str = str + '<source src="/static/processed/'+filename+'.wav" type="audio/mpeg">';
+        str = str + '</audio>';
+        return str;
+    };
+    
+    function tableElement(label, audio, play, stop) {
+        var str = '<div class="form-group row">';
+        str = str + '<div class="col-sm-2">'+label+'</div>';
+        str = str + '<div class="col-sm-6">'+audio+'</div>';
+        str = str + '</div>';
+        return str;
+    };
 
     $(document).ready(page.ready);
 

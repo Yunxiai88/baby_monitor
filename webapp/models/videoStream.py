@@ -34,7 +34,7 @@ class VideoStream:
     def load_wav_16k_mono(self, filename):
         """ read in a waveform file and convert to 16 kHz mono """
         filename = utils.get_file_path('webapp/static/processed', filename)
-        
+
         file_contents = tf.io.read_file(filename)
         wav, sample_rate = tf.audio.decode_wav(file_contents,
                                               desired_channels=1)
@@ -49,7 +49,7 @@ class VideoStream:
         filename = utils.get_file_path('webapp/static/processed', filename)
 
         sf.write(filename, data, sample_rate, subtype='PCM_24')
-    
+
     # process audio
     def processvideo(self, filename):
         print("process audio for -> " + filename)
@@ -65,7 +65,7 @@ class VideoStream:
         for i in range(0, int(duration), 5):
             start = i*sample_rate
             end   = (i+5)*sample_rate
-            
+
             duration = 'duration from {:d} -- {:d}'.format(i, i+5)
             print(duration)
 
@@ -74,10 +74,10 @@ class VideoStream:
             reloaded_results = self.yamnet_model(wav_data)
             baby_sound = self.LABELS[tf.argmax(reloaded_results)]
             print(f'The main sound is: {baby_sound}')
-            
+
             # save clip file
             self.save_clip(wav_data, i, filename)
-            
+
             outputfilename[i] = baby_sound
 
         print("processed video was successfully saved", outputfilename)

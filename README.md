@@ -40,7 +40,7 @@
 
 * 1. create environment:   
             ```
-      	conda create -n baby python=3.6
+      	conda create -n baby python=3.7
             ```
 
 * 2. activate newly created environment:   
@@ -53,7 +53,8 @@
       	pip install -r requirement.txt
             ```
 
-     If any packages fail to install, try install individually using conda
+     If any packages fail to install, try install individually using conda   
+     You may need to run this multiple times to avoid packages being missed out
 
 
 * 4. Run this command at the project root directory:  

@@ -36,10 +36,10 @@ def group_action(actions):
 
 def get_period(index, name, groups):
     periods = []
-    if name in groups:
-        group = groups.get(name)
-        for i in range(len(group)):
-            periods.append({'id':'{:s}_{:d}'.format(index, i), 'start':group[i], 'end':group[i]+5})
+    
+    group = groups.get(name)
+    for i in range(len(group)):
+        periods.append({'id':'{:s}_{:d}'.format(index, i), 'start':group[i], 'end':group[i]+5})
     return periods
 
 def video_audio(input, output):

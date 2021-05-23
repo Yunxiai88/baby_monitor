@@ -72,7 +72,7 @@ class VideoStream:
             wav_data = data[start:end]
 
             reloaded_results = self.yamnet_model(wav_data)
-            baby_sound = self.LABELS[tf.argmax(reloaded_results)]
+            baby_sound = self.LABELS[reloaded_results]
             print(f'The main sound is: {baby_sound}')
 
             # save clip file

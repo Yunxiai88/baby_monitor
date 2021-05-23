@@ -67,5 +67,6 @@
 * https://www.soundjay.com/baby-crying-sound-effect.html
 * https://research.google.com/audioset/ontology/index.html
 * https://gist.github.com/achillessin
+* https://blog.tensorflow.org/2021/03/transfer-learning-for-audio-data-with-yamnet.html
 * https://towardsdatascience.com/deep-learning-for-classifying-audio-of-babies-crying-9a29e057f7ca
 

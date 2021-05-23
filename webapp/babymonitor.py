@@ -109,16 +109,22 @@ def uploadvideo():
         groups = utils.group_action(actions)
         print("groups = ", groups)
 
+        total_vid_frames = 0
         # category
         bases = [{'1':'Climb', '2':'Crawl', '3':'Roll', '4':'Walk', '5': 'Others'}]
         for dic in bases:
             for id, name in dic.items():
                 if name in groups:
                     periods = utils.get_period(id, name, groups)
+                    total_vid_frames = total_vid_frames + len(periods)
                 else:
                     periods = []
                 video.append({'id':id, 'name':name, 'periods':periods})
+
         
+        if (len(audio)>total_vid_frames):
+            # if the length does not align, pop the last window from audio
+            audio.popitem()
         # allow user to download and listen
         output = {'output': {'filename': filename, 'audio': audio, 'video': video}}
         return jsonify(output)

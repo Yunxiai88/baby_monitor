@@ -53,6 +53,8 @@
       	pip install -r requirement.txt
             ```
 
+     If any packages fail to install, try install individually using conda
+
 
 * 4. Run this command at the project root directory:  
              ```
@@ -62,6 +64,10 @@
              ```
              http://localhost:8000/
              ```
+
+## Github repo
+
+            https://github.com/NormanLYJ/baby_monitor
 ## References
 
 * https://www.soundjay.com/baby-crying-sound-effect.html

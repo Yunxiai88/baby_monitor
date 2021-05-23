@@ -42,7 +42,7 @@
 
                 var file_list = listClips(data.response.output);
 
-                $("#uploadFile_processed").html(file_list);
+                // $("#uploadFile_processed").html(file_list);
                 $("#processresultdiv").show();
 
                 // display chart

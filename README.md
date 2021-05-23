@@ -1,25 +1,20 @@
-# Baby Safety Monitoring
+# Video-Based Multi-Modal Intelligent Infant Activities Tracking System
 
 ## Description
-* Under current COVID-19 pandemic situation, it is critical to ensure everyone stay safe and protected by wearing mask at all time. 
-* There is a need for an auto mask detection, especially in public aeras like shopping malls, offices, schools etc.
+* Taking care of newborn babies is not an easy job, it takes timefor the parents to understand their infant’s behavior to takecare of them better. 
+* This project proposed a multi-modal solution to analyze the babys’ action activities including climbing,crawling, rolling, walking, as well as detecing crying using audio input
 
-* This projects aims to provide a system to automatically detect those who enter a public area not wearing a proper mask, and based on the pre-trained Deep Learning model, recognize the identity of the person, which can then be integrated to downstream system to provide possible warnings to the person or the management team.
 
-## System Requirement
-* OS: Windows 10/Linux
-* GPU: NVIDIA GeForce GTX
-* CUDA TOOLKIT: cuda_11.0.3
-* cuDNN SDK: v11.0
+
 
 ## Technology
-* LabelImg: clone project from (https://github.com/tzutalin/labelImg.git)
 * Python: 3.x
 * Flask
 * OpenCV
-* YOLOv4
 * YAMNet
-* InceptionResNetV2
+* 3D Convolutional Network
+* tensorflow, pandas, numpy
+* Other libraries like librosa, moviepy, pyaudio, pydub
 
 ## Training Details
 
@@ -40,23 +35,33 @@
       * refer to ```video_classification_on_baby_action.ipynb``` for more details on 3D CNN model summary and training parameters.
        
 
-## System Integration
-1. **WebUI**
+## How to run the system
 
-2. **Execution** 
 
-download the trained weight from 
-https://drive.google.com/file/d/1-7JQiyR2yLLPJJJNV30NZIgpqnwsk1Jh/view?usp=sharing
-and put it under /yolov4/yolov4_custom_train_final.weights
+* 1. create environment:   
+            ```
+      	conda create -n baby python=3.6
+            ```
 
-* run this command at the project root directory:  
-       ```
-       $ python webapp/babymonitor.py --ip 127.0.0.1 --port 8000
-       ```
-* open URL in your browser:
-       ```
-       http://localhost:8000/
-       ```
+* 2. activate newly created environment:   
+            ```
+      	conda activate baby
+            ```
+
+* 3. Go to the project root folder and run below command to install packages:   
+            ```
+      	pip install -r requirement.txt
+            ```
+
+
+* 4. Run this command at the project root directory:  
+             ```
+             python webapp/babymonitor.py --ip 127.0.0.1 --port 8000
+             ```
+* 5. open URL in your browser:   
+             ```
+             http://localhost:8000/
+             ```
 ## References
 
 * https://www.soundjay.com/baby-crying-sound-effect.html

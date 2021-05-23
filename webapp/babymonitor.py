@@ -116,12 +116,12 @@ def uploadvideo():
                 if name in groups:
                     periods = utils.get_period(id, name, groups)
                 else:
-                    periods = {}
+                    periods = []
                 video.append({'id':id, 'name':name, 'periods':periods})
         
         # allow user to download and listen
         output = {'output': {'filename': filename, 'audio': audio, 'video': video}}
-        return jsonify({'output': output})
+        return jsonify(output)
 
 # execute function
 if __name__ == '__main__':

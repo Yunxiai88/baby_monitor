@@ -182,7 +182,7 @@
         // text__nocry_1.text("not Crying");
         // text__nocry_1.fontWeight(600);
         // text__nocry_1.offsetX(-10);    
-        
+        debugger
         var chartData = data.video.map(label=>{
             var newLabel = {...label}
             var newPeriods = label.periods.map(session=>{

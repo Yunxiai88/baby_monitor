@@ -33,7 +33,6 @@
             // clear button
             $(".btn-reset-3").on("click", function() {
                 $("#uploadVideo").fileinput('clear');
-                $("#processresultdiv").empty()
             });
 
             // call back function for upload file
@@ -91,101 +90,8 @@
     };
 
     function displayGanttChart(data) {
-        // var data =
-        // {
-        // 'audio': {
-        //     '0-5': "crying_baby",
-        //     '5-10': "crying_baby",
-        //     '10-15': "crying_baby"
-        // },
-        // 'video': [
-        //     {
-        //       id: "1",
-        //       name: "Climb",
-        //       periods: [
-        //         {id:"1_1", start: "00", end: "05"},
-        //         {id:"1_2", start: "15", end: "20"},
-        //         {id:"1_3", start: "20", end: "25"}
-        //     ]},
-        //     {
-        //       id: "2",
-        //       name: "Crawl",
-        //       periods: [
-        //         {id: "2_1", start: "05", end: "10"},
-        //         {id: "2_2", start: "25", end: "30"}
-        //     ]},
-        //     {
-        //       id: "3",
-        //       name: "Roll",
-        //       periods: [
-        //         {id: "3_1", start: "10", end: "15"}
-        //     ]},
-        //     {
-        //        id: "4",
-        //        name: "Walk",
-        //        periods: [
-        //          {id: "3_1", start: "30", end: "35"}
-        //     ]}
-        //   ]
-        // }
-
-        // var treeData = anychart.data.tree(data.video, "as-table");
-        // var chart = anychart.ganttResource(); 
-        // chart.data(treeData);
-
-        // var marker__nocry_1 = chart.getTimeline().rangeMarker(0);
-        // var marker__nocry_2 = chart.getTimeline().rangeMarker(1);
-        // var marker__nocry_3 = chart.getTimeline().rangeMarker(2);
-        // var marker__nocry_4 = chart.getTimeline().rangeMarker(3);
-        // var marker__nocry_5 = chart.getTimeline().rangeMarker(4);
-        // var marker_cry_1 = chart.getTimeline().rangeMarker(5);
-        // var text__cry_1 = chart.getTimeline().textMarker(0);
-        // var text__cry_2 = chart.getTimeline().textMarker(1);
-        // var text__nocry_1 = chart.getTimeline().textMarker(2);
-
-
-        // marker__nocry_1.from("2018-01-02T00:00:00.000Z");
-        // marker__nocry_1.to("2018-01-02T00:00:05.000Z");
-        // marker__nocry_1.fill("#a4cbad 0.2");
-
-        // marker__nocry_2.from("2018-01-02T00:00:05.000Z");
-        // marker__nocry_2.to("2018-01-02T00:00:10.000Z");
-        // marker__nocry_2.fill("#a4cbad 0.2");
-
-        // marker__nocry_3.from("2018-01-02T00:00:10.000Z");
-        // marker__nocry_3.to("2018-01-02T00:00:15.000Z");
-        // marker__nocry_3.fill("#a4cbad 0.2");
-
-        // marker__nocry_4.from("2018-01-02T00:00:15.000Z");
-        // marker__nocry_4.to("2018-01-02T00:00:20.000Z");
-        // marker__nocry_4.fill("#a4cbad 0.2");
-
-        // marker__nocry_5.from("2018-01-02T00:00:25.000Z");
-        // marker__nocry_5.to("2018-01-02T00:00:30.000Z");
-        // marker__nocry_5.fill("#a4cbad 0.2");
-
-
-        // marker_cry_1.from("2018-01-02T00:00:20.000Z");
-        // marker_cry_1.to("2018-01-02T00:00:25.000Z");
-        // marker_cry_1.fill("#dd2c00 0.2");
-
-
-        // text__cry_1.value("2018-01-02T00:00:23.000Z");
-        // text__cry_1.text("Crying");
-        // text__cry_1.fontWeight(600);
-        // text__cry_1.offsetX(-10);
-
-
-        // text__cry_2.value("2018-01-02T00:00:08.000Z");
-        // text__cry_2.text("Crying");
-        // text__cry_2.fontWeight(600);
-        // text__cry_2.offsetX(-10);     
         
-        // text__nocry_1.value("2018-01-02T00:00:13.000Z");
-        // text__nocry_1.text("not Crying");
-        // text__nocry_1.fontWeight(600);
-        // text__nocry_1.offsetX(-10);    
-        debugger
+
         var chartData = data.video.map(label=>{
             var newLabel = {...label}
             var newPeriods = label.periods.map(session=>{

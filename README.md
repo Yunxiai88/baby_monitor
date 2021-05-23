@@ -50,25 +50,25 @@
 
 * 3. Go to the project root folder and run below command to install packages:   
             ```
-      	pip install -r requirement.txt
+      	pip install -r requirement.txt  
+            ```   
+            ```    
+            conda install pyaudio==0.2.11
             ```
 
-     If any packages fail to install, try install individually using conda   
-     You may need to run this multiple times to avoid packages being missed out
+     If any packages fail to install, try installing individually      
+     If any errors, try to do this one more time to avoid packages being missed out   
 
 
 * 4. Run this command at the project root directory:  
              ```
              python webapp/babymonitor.py --ip 127.0.0.1 --port 8000
              ```
-* 5. open URL in your browser:   
-             ```
-             http://localhost:8000/
-             ```
+* 5. open URL in your browser: http://localhost:8000/
 
-## Github repo
 
-            https://github.com/NormanLYJ/baby_monitor
+## Github repo   
+https://github.com/NormanLYJ/baby_monitor
 ## References
 
 * https://www.soundjay.com/baby-crying-sound-effect.html

@@ -33,6 +33,7 @@
             // clear button
             $(".btn-reset-3").on("click", function() {
                 $("#uploadVideo").fileinput('clear');
+                $("#processresultdiv").empty()
             });
 
             // call back function for upload file

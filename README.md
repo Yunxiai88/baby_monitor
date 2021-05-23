@@ -59,12 +59,14 @@
      If any packages fail to install, try installing individually      
      If any errors, try to do this one more time to avoid packages being missed out   
 
+* 4.  create an empty folder called `uploads` under `webapp`  
+* 5.  create an empty folder called `processed` under `webapp\static`  
 
-* 4. Run this command at the project root directory:  
+* 6. Run this command at the project root directory:  
              ```
              python webapp/babymonitor.py --ip 127.0.0.1 --port 8000
              ```
-* 5. open URL in your browser: http://localhost:8000/
+* 7. open URL in your browser: http://localhost:8000/
 
 
 ## Github repo   

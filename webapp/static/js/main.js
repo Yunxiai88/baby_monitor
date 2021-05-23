@@ -45,6 +45,8 @@
                 // $("#uploadFile_processed").html(file_list);
                 $("#processresultdiv").show();
 
+                $(".text-success").text("Uploaded, Please note only certain videos are displayed")
+
                 // display chart
                 displayGanttChart(data.response.output)
                 displayBarChartAction(data.response.output)
